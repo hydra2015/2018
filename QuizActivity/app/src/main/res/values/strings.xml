@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">QuizActivity</string>
+    <string name="qestion_text">中国是发达国家吗</string>
+    <string name="true_button">正确</string>
+    <string name="false_button">错误</string>
+    <string name="next_button">下一个</string>
+    <string name="last_button">上一个</string>
+    <string name="question_anyang">安阳属于河南</string>
+    <string name="question_zhengzhou">郑州是河南省省会</string>
+    <string name="question_beijing">北京是中国首都</string>
+    <string name="question_handong">汉东是中国省份</string>
+    <string name="question_tangyin">汤阴是地级市</string>
+    <string name="correct_toast">回答正确</string>
+    <string name="incorrect_toast">回答错误</string>
+</resources>
