@@ -1,5 +1,6 @@
 package com.example.hydra.quizactivity;
 
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -8,15 +9,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hydra.quizactivity.utils.LogUtil;
+
 //AppcompatActivity作为activity的子类保证旧版本兼容
 public class QuizActivity extends AppCompatActivity {
+
+    private static final String KEY_INDEX = "index";
 
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
     private Button mLastButton;
     private TextView mQuestionTextView;
-
     private int mCurrentIndex = 0;
 
     private Question [] mQuestionBank = new Question[] {
@@ -33,6 +37,9 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         initView();
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
+        }
         updataQuestion();
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,5 +108,11 @@ public class QuizActivity extends AppCompatActivity {
         mQuestionTextView = findViewById(R.id.question_text_view);
         mNextButton = findViewById(R.id.next_button);
         mLastButton = findViewById(R.id.last_button);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_INDEX, mCurrentIndex);
     }
 }
