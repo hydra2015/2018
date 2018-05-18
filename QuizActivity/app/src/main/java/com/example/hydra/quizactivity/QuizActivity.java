@@ -22,13 +22,15 @@ public class QuizActivity extends AppCompatActivity {
     private Button mLastButton;
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
+    private int mCount;
+    private int mRightCount;
 
     private Question [] mQuestionBank = new Question[] {
-            new Question(R.string.question_anyang, true),
-            new Question(R.string.question_zhengzhou, true),
-            new Question(R.string.question_beijing, true),
-            new Question(R.string.question_handong, false),
-            new Question(R.string.question_tangyin, false)
+            new Question(R.string.question_anyang, true, true),
+            new Question(R.string.question_zhengzhou, true, true),
+            new Question(R.string.question_beijing, true, true),
+            new Question(R.string.question_handong, false, true),
+            new Question(R.string.question_tangyin, false, true)
     };
 
     @Override
@@ -45,7 +47,10 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(QuizActivity.this, "点击了正确按钮", Toast.LENGTH_SHORT).show();
+
                 checkAnswer(true);
+                mQuestionBank[mCurrentIndex].setAnswerTrue(false);
+
             }
         });
 
@@ -58,6 +63,7 @@ public class QuizActivity extends AppCompatActivity {
                 toast.setText("点击了错误按钮");
                 toast.show();*/
                 checkAnswer(false);
+                mQuestionBank[mCurrentIndex].setAnswerTrue(false);
             }
         });
 
@@ -86,6 +92,8 @@ public class QuizActivity extends AppCompatActivity {
     private void updataQuestion() {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+        mTrueButton.setEnabled(mQuestionBank[mCurrentIndex].isAnswerTrue());
+        mFalseButton.setEnabled(mQuestionBank[mCurrentIndex].isAnswerTrue());
     }
 
     private void checkAnswer(boolean userPerssedTrue){
@@ -95,11 +103,15 @@ public class QuizActivity extends AppCompatActivity {
 
         if (userPerssedTrue == answerIsTrue){
             messageResId = R.string.correct_toast;
+            mRightCount++;
         }else {
             messageResId = R.string.incorrect_toast;
         }
-
+        mCount++;
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+        if (mCount >= mQuestionBank.length){
+            Toast.makeText(this, mRightCount/mQuestionBank.length*100 + "%", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initView() {
