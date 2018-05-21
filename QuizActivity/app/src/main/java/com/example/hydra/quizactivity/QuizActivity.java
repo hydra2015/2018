@@ -49,8 +49,10 @@ public class QuizActivity extends AppCompatActivity {
 //                Toast.makeText(QuizActivity.this, "点击了正确按钮", Toast.LENGTH_SHORT).show();
 
                 checkAnswer(true);
-                mQuestionBank[mCurrentIndex].setAnswerTrue(false);
-
+                mQuestionBank[mCurrentIndex].setmEnter(false);
+                LogUtil.e("mCurrentIndex:", mCurrentIndex + "");
+                mTrueButton.setEnabled(mQuestionBank[mCurrentIndex].ismEnter());
+                mFalseButton.setEnabled(mQuestionBank[mCurrentIndex].ismEnter());
             }
         });
 
@@ -62,8 +64,11 @@ public class QuizActivity extends AppCompatActivity {
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.setText("点击了错误按钮");
                 toast.show();*/
+                mQuestionBank[mCurrentIndex].setmEnter(false);
+                LogUtil.e("mCurrentIndex:", mCurrentIndex + "");
                 checkAnswer(false);
-                mQuestionBank[mCurrentIndex].setAnswerTrue(false);
+                mTrueButton.setEnabled(mQuestionBank[mCurrentIndex].ismEnter());
+                mFalseButton.setEnabled(mQuestionBank[mCurrentIndex].ismEnter());
             }
         });
 
@@ -92,8 +97,8 @@ public class QuizActivity extends AppCompatActivity {
     private void updataQuestion() {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
-        mTrueButton.setEnabled(mQuestionBank[mCurrentIndex].isAnswerTrue());
-        mFalseButton.setEnabled(mQuestionBank[mCurrentIndex].isAnswerTrue());
+        mTrueButton.setEnabled(mQuestionBank[mCurrentIndex].ismEnter());
+        mFalseButton.setEnabled(mQuestionBank[mCurrentIndex].ismEnter());
     }
 
     private void checkAnswer(boolean userPerssedTrue){
@@ -110,7 +115,7 @@ public class QuizActivity extends AppCompatActivity {
         mCount++;
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
         if (mCount >= mQuestionBank.length){
-            Toast.makeText(this, mRightCount/mQuestionBank.length*100 + "%", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, (float)mRightCount/mQuestionBank.length*100 + "%", Toast.LENGTH_SHORT).show();
         }
     }
 
